@@ -1,0 +1,160 @@
+1. 객체 (Object):
+객체는 데이터와 그 데이터를 처리하는 함수(메서드)를 하나로 묶은 개념이다. 객체는 **상태(state)**와 **행동(behavior)**을 가진다. 예를 들어, 자동차 객체를 생각해보자. 자동차는 상태로 색상, 속도, 연료 등의 속성을 가지고, 행동으로는 운전하기, 정지하기, 가속하기와 같은 메서드를 가진다.
+python
+복사
+class Car:
+    def __init__(self, color, speed, fuel):
+        self.color = color
+        self.speed = speed
+        self.fuel = fuel
+
+    def drive(self):
+        print(f"The car is driving at {self.speed} km/h.")
+
+    def stop(self):
+        print("The car has stopped.")
+여기서 Car 클래스는 자동차 객체를 생성하기 위한 설계도이고, 각 자동차 객체는 색상, 속도, 연료 등의 상태를 가지고 있으며, drive와 stop 같은 행동을 수행할 수 있다.
+
+2. 클래스 (Class):
+클래스는 객체를 생성하기 위한 설계도이다. 클래스는 객체의 속성과 메서드를 정의하며, 이를 바탕으로 여러 개의 객체를 만들 수 있다. Car 클래스는 자동차 객체를 생성하기 위한 설계도 역할을 한다.
+예를 들어, Car 클래스를 기반으로 car1과 car2라는 두 개의 자동차 객체를 생성할 수 있다.
+
+python
+복사
+car1 = Car("Red", 100, 50)
+car2 = Car("Blue", 80, 40)
+
+car1.drive()  # 출력: "The car is driving at 100 km/h."
+car2.stop()   # 출력: "The car has stopped."
+3. 인스턴스 (Instance):
+인스턴스는 클래스에서 실제로 생성된 객체이다. car1과 car2는 Car 클래스에서 생성된 인스턴스이다. 각 인스턴스는 클래스로부터 생성된 실제 객체로, 고유한 상태(속성)를 가진다.
+python
+복사
+print(car1.color)  # 출력: "Red"
+print(car2.speed)  # 출력: 80
+4. 추상화 (Abstraction):
+추상화는 객체의 중요한 속성이나 기능만을 노출하고, 내부 구현을 숨기는 것이다. 예를 들어, Car 클래스에서 drive 메서드를 호출하면 자동차가 운전되는 모습을 볼 수 있지만, 그 내부의 복잡한 동작은 숨겨져 있다.
+python
+복사
+class Car:
+    def __init__(self, color, speed):
+        self.color = color
+        self.speed = speed
+
+    def drive(self):
+        # 복잡한 내부 동작이 있지만, 외부에서는 신경 쓸 필요 없다.
+        print(f"Driving at {self.speed} km/h")
+
+car = Car("Red", 100)
+car.drive()  # 외부에서 보기에는 간단한 메서드 호출
+추상화를 통해 사용자에게 필요한 기능만 제공하고, 내부 구현은 숨길 수 있다.
+
+5. 상속 (Inheritance):
+상속은 기존 클래스를 기반으로 새로운 클래스를 만들어서 코드를 재사용할 수 있게 한다. 자식 클래스는 부모 클래스의 속성과 메서드를 물려받을 수 있다. 예를 들어, Animal 클래스에서 공통된 속성 및 메서드를 정의하고, Dog와 Cat 같은 자식 클래스에서 이를 상속받을 수 있다.
+python
+복사
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        raise NotImplementedError("Subclasses must implement abstract method")
+
+class Dog(Animal):
+    def speak(self):
+        print(f"{self.name} says Woof!")
+
+class Cat(Animal):
+    def speak(self):
+        print(f"{self.name} says Meow!")
+
+dog = Dog("Buddy")
+cat = Cat("Whiskers")
+
+dog.speak()  # 출력: "Buddy says Woof!"
+cat.speak()  # 출력: "Whiskers says Meow!"
+여기서 Dog와 Cat 클래스는 Animal 클래스를 상속받고, 각자의 방식으로 speak 메서드를 구현한다. 상속을 통해 코드의 재사용성을 높일 수 있다.
+
+6. 캡슐화 (Encapsulation):
+캡슐화는 객체의 내부 데이터를 숨기고 외부에서 직접 접근할 수 없도록 하는 개념이다. 내부 데이터는 private으로 설정하고, 외부에서 데이터를 변경하거나 가져오려면 getter와 setter 메서드를 사용한다.
+python
+복사
+class Car:
+    def __init__(self, color, speed):
+        self.__color = color  # private 속성
+        self.__speed = speed  # private 속성
+
+    def get_color(self):
+        return self.__color
+
+    def set_color(self, color):
+        self.__color = color
+
+car = Car("Red", 100)
+print(car.get_color())  # 출력: "Red"
+car.set_color("Blue")
+print(car.get_color())  # 출력: "Blue"
+여기서 __color와 __speed는 private으로 설정되어 외부에서 직접 접근할 수 없다. 대신 get_color와 set_color 메서드를 통해 색상을 변경하거나 조회할 수 있다.
+
+7. 다형성 (Polymorphism):
+다형성은 같은 이름의 메서드가 서로 다른 객체에서 다르게 동작할 수 있게 하는 특성이다. 예를 들어, Animal 클래스에서 speak 메서드를 정의하고, 각 자식 클래스에서 이를 다르게 구현할 수 있다.
+python
+복사
+class Animal:
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
+
+def animal_sound(animal):
+    print(animal.speak())
+
+dog = Dog()
+cat = Cat()
+
+animal_sound(dog)  # 출력: "Woof!"
+animal_sound(cat)  # 출력: "Meow!"
+animal_sound 함수는 Dog와 Cat 객체에서 모두 호출되지만, 각 객체에 맞는 speak 메서드가 실행된다. 다형성을 통해 같은 메서드 이름으로 다양한 객체에서 다른 동작을 할 수 있다.
+
+8. 메시지 (Message):
+메시지는 객체 간의 상호작용을 의미한다. 객체는 다른 객체의 메서드를 호출하거나 데이터를 주고받을 수 있다.
+python
+복사
+class Car:
+    def start(self):
+        print("Car started")
+
+class Driver:
+    def drive(self, car):
+        car.start()  # Car 객체에 메시지를 보낸다.
+
+car = Car()
+driver = Driver()
+driver.drive(car)  # 출력: "Car started"
+여기서 Driver 객체는 Car 객체에 start 메서드를 호출하는 메시지를 보낸다.
+
+9. 인터페이스 (Interface):
+인터페이스는 클래스가 반드시 구현해야 할 메서드를 정의하는 규칙이다. 인터페이스는 메서드의 서명만 제공하고, 그 구체적인 구현은 해당 클래스가 해야 한다. Python에는 공식적인 인터페이스 개념은 없지만, ABC(Abstract Base Class)를 사용하여 비슷한 기능을 구현할 수 있다.
+python
+복사
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        print("Woof!")
+
+dog = Dog()
+dog.speak()  # 출력: "Woof!"
+Animal 클래스는 speak 메서드가 반드시 구현되어야 한다는 인터페이스 역할을 한다. Dog 클래스는 이를 구현하고, 이를 통해 speak 메서드를 사용할 수 있다.
+
